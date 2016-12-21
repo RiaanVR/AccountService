@@ -86,6 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accounting\DefaultBankAccountLocator.cs" />
+    <Compile Include="Accounting\BalanceDoubleAsHighAccountConstraint.cs" />
+    <Compile Include="Accounting\IDefaultAccountConstraint.cs" />
+    <Compile Include="Accounting\PositiveBalanceAccountContstraint.cs" />
+    <Compile Include="Accounting\NotSyntheticAccountConstraint.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BankAccountsController.cs" />
     <Compile Include="Global.asax.cs">

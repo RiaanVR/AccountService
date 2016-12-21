@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Speedledger.AccountService.Models
 {
+    /// <summary>
+    /// Concrete implementation of an IBankAccountRepository, will return hard coded data.
+    /// </summary>
     public class BankAccountRepository : IBankAccountRepository
     {
         public IEnumerable<BankAccount> GetBankAccounts()
@@ -15,7 +15,6 @@ namespace Speedledger.AccountService.Models
                 new BankAccount { Id = 2, Number = "2446987", Name="Business Account", CreditCard = false, Synthetic = false, Balance = 34057.00M  },
                 new BankAccount { Id = 3, Number = "9981644", Name="Credit card", CreditCard = true, Synthetic = false, Balance = -10057.00M  },
                 new BankAccount { Id = 4, Number = "0", Name="Expense claims", CreditCard = false, Synthetic = true, Balance = 0M  },
-
             };
         }
     }

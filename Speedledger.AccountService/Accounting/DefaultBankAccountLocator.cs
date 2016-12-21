@@ -1,45 +1,52 @@
-﻿using Speedledger.AccountService.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using Speedledger.AccountService.Models;
 
 namespace Speedledger.AccountService.Accounting
 {
+    /// <summary>
+    /// Represents the locator service that will find the default bank account among the account specified.
+    /// </summary>
     public class DefaultBankAccountLocator
     {
         private readonly IEnumerable<BankAccount> bankAccounts;
+        private readonly IEnumerable<IDefaultAccountConstraint> constraints;
 
-        public DefaultBankAccountLocator(IEnumerable<BankAccount> bankAccounts)
+        public DefaultBankAccountLocator(IEnumerable<BankAccount> bankAccounts) : this(bankAccounts, GetDefaultAccountConstraints(bankAccounts))
         {
-            this.bankAccounts = bankAccounts;
         }
 
+        public DefaultBankAccountLocator(IEnumerable<BankAccount> bankAccounts, IEnumerable<IDefaultAccountConstraint> constraints)
+        {
+            this.bankAccounts = bankAccounts;
+            this.constraints = constraints;
+        }
+
+        /// <summary>
+        /// Locate the default account
+        /// </summary>
+        /// <returns>Default Bank Account</returns>
         public BankAccount FindDefaultBankAccount()
         {
             return bankAccounts.FirstOrDefault(bankAcc =>
             {
-                return IsAccountBalanceDoubleAsHigh(bankAcc, bankAccounts) 
-                && IsAccountNotSynthetic(bankAcc) 
-                && IsAccountNotNegative(bankAcc);
+                return constraints.All(constraint => constraint.Verify(bankAcc));
             });
         }
 
-        private static bool IsAccountBalanceDoubleAsHigh(BankAccount account, IEnumerable<BankAccount> bankAccounts)
+        /// <summary>
+        /// Helper function to initialise the locator given no constraints were passed
+        /// </summary>
+        /// <param name="bankAccounts">IEnumerable of BankAccount</param>
+        /// <returns>Default list of constraints</returns>
+        private static IEnumerable<IDefaultAccountConstraint> GetDefaultAccountConstraints(IEnumerable<BankAccount> bankAccounts)
         {
-            var balanceMaximum = bankAccounts.Where(bankAcc => !bankAcc.Id.Equals(account.Id)).Max(bankAcc => bankAcc.Balance);
-
-            return account.Balance > balanceMaximum * 2;
+            return new List<IDefaultAccountConstraint>()
+            {
+                new BalanceDoubleAsHighAccountConstraint(bankAccounts),
+                new NotSyntheticAccountConstraint(),
+                new PositiveBalanceAccountContstraint()
+            };
         }
-
-        private static bool IsAccountNotSynthetic(BankAccount account)
-        {
-            return !account.Synthetic;
-        }
-
-        private static bool IsAccountNotNegative(BankAccount account)
-        {
-            return account.Balance > 0;
-        }        
     }
 }

@@ -63,10 +63,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Accounting\BalanceDoubleAsHighAccountConstraintTests.cs" />
+    <Compile Include="Accounting\DefaultBankAccountLocatorTests.cs" />
+    <Compile Include="Accounting\NotSyntheticAccountConstraintTests.cs" />
+    <Compile Include="Accounting\PositiveAccountContstraintTests.cs" />
     <Compile Include="Controllers\BankAccountsControllerTests.cs" />
-    <Compile Include="Mocks\MockDefaultBankAccountRepository.cs" />
     <Compile Include="Mocks\MockOnlySythenticBankAccountRepository.cs" />
-    <Compile Include="Mocks\MockRegularBankAccountRepository - Copy.cs" />
+    <Compile Include="Mocks\MockRegularBankAccountRepository.cs" />
     <Compile Include="Mocks\MockNoHighBalanceBankAccountRepository.cs" />
     <Compile Include="Mocks\MockNegativeBankAccountRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

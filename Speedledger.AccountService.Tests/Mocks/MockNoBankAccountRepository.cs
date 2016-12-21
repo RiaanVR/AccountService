@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Speedledger.AccountService.Models;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Speedledger.AccountService.Models;
 
-namespace Speedledger.AccountService.Tests.Mocks
+namespace Speedledger.AccountService.Mocks
 {
     internal class MockNoBankAccountRepository : IBankAccountRepository
     {

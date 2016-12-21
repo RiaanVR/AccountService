@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Speedledger.AccountService.Models
 {
+    /// <summary>
+    ///  Represents a common interface for retrieval of Bank Accounts.
+    /// </summary>
     public interface IBankAccountRepository
     {
         IEnumerable<BankAccount> GetBankAccounts();
